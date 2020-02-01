@@ -1,4 +1,4 @@
-package com.railian.mobile.nolibschallange.util.mvp.extensions
+package com.railian.mobile.nolibschallange.util.extensions
 
 import android.os.AsyncTask
 

@@ -1,67 +1,75 @@
 package com.railian.mobile.nolibschallange.data.pojo
 
+import org.json.JSONException
+import org.json.JSONObject
+
 data class SearchResult(
-    val additionalArtists: List<AdditionalArtist> = listOf(),
-    val adfunded: Boolean = false,
-    val bundleOnly: Boolean = false,
+    val additionalArtists: List<Artist> = listOf(),
     val cover: Cover = Cover(),
-    val duration: Int = 0,
-    val extendedMetaData: ExtendedMetaData = ExtendedMetaData(),
-    val genres: List<String> = listOf(),
     val id: Int = 0,
-    val idBag: IdBag = IdBag(),
-    val mainArtist: MainArtist = MainArtist(),
-    val publishingDate: String = "",
-    val release: Release = Release(),
-    val statistics: Statistics = Statistics(),
-    val streamable: Boolean = false,
+    val mainArtist: Artist = Artist(),
     val title: String = "",
-    val trackNumber: Int = 0,
-    val type: String = "",
-    val volumeNumber: Int = 0
+    val type: String = ""
 ) {
-    data class AdditionalArtist(
-        val id: Int = 0,
-        val name: String = "",
-        val role: String = ""
-    )
+    companion object {
+        @JvmStatic
+        @Throws(JSONException::class)
+        fun unBox(json: String): SearchResult {
+
+            val jsonObject = JSONObject(json)
+            val additionalArtists = mutableListOf<Artist>()
+            val additionalArtistsArray = jsonObject.optJSONArray("additionalArtists")
+
+            for (i in 0 until additionalArtistsArray.length()) {
+                additionalArtists.add(Artist.unBox(additionalArtistsArray[i] as JSONObject))
+            }
+
+            return SearchResult(
+                additionalArtists,
+                Cover.unBox(jsonObject.optJSONObject("cover")),
+                jsonObject.optInt("id"),
+                Artist.unBox(jsonObject.optJSONObject("mainArtist")),
+                jsonObject.optString("title"),
+                jsonObject.optString("type")
+            )
+        }
+    }
 
     data class Cover(
         val large: String = "",
         val medium: String = "",
         val small: String = "",
         val tiny: String = ""
-    )
+    ) {
+        companion object {
+            @JvmStatic
+            @Throws(JSONException::class)
+            fun unBox(jsonObject: JSONObject): Cover {
+                return Cover(
+                    jsonObject.optString("large"),
+                    jsonObject.optString("medium"),
+                    jsonObject.optString("small"),
+                    jsonObject.optString("tiny")
+                )
+            }
+        }
+    }
 
-    data class ExtendedMetaData(
-        val genresHierarchy: List<String> = listOf(),
-        val gracenoteRythmApiGenreIds: String = "",
-        val languages: String = "",
-        val moods: List<String> = listOf(),
-        val originalSongId: String = "",
-        val originalTitle: String = "",
-        val releaseYear: String = "",
-        val tempos: List<String> = listOf()
-    )
-
-    data class IdBag(
-        val roviTrackId: String = ""
-    )
-
-    data class MainArtist(
+    data class Artist(
         val id: Int = 0,
         val name: String = "",
         val role: String = ""
-    )
-
-    data class Release(
-        val id: Int = 0,
-        val title: String = ""
-    )
-
-    data class Statistics(
-        val estimatedRecentCount: Int = 0,
-        val estimatedTotalCount: Int = 0,
-        val popularity: Int = 0
-    )
+    ) {
+        companion object {
+            @JvmStatic
+            @Throws(JSONException::class)
+            fun unBox(jsonObject: JSONObject): Artist {
+                return Artist(
+                    jsonObject.optInt("id"),
+                    jsonObject.optString("name"),
+                    jsonObject.optString("role")
+                )
+            }
+        }
+    }
 }
