@@ -1,9 +1,10 @@
 package com.railian.mobile.nolibschallange.ui.search
 
+import com.railian.mobile.nolibschallange.data.network.HttpRequest
+import com.railian.mobile.nolibschallange.data.network.HttpResult
 import com.railian.mobile.nolibschallange.data.pojo.SearchResult
 import com.railian.mobile.nolibschallange.data.pojo.TokenResponse
-import com.railian.mobile.nolibschallange.data.pojo.network.HttpRequest
-import com.railian.mobile.nolibschallange.util.extensions.HttpResult
+import com.railian.mobile.nolibschallange.util.Constants
 import com.railian.mobile.nolibschallange.util.mvp.Repository
 import org.json.JSONArray
 
@@ -12,9 +13,9 @@ class SearchRepository : Repository() {
     fun getToken(): HttpResult<TokenResponse> {
         val response = makeHttpRequest(
             HttpRequest(
-                url = "http://staging-gateway.mondiamedia.com/v0/api/gateway/token/client",
+                url = "${Constants.BASE_URL}/v0/api/gateway/token/client",
                 type = HttpRequest.RequestType.POST,
-                headers = mapOf(Pair("X-MM-GATEWAY-KEY", "Ge6c853cf-5593-a196-efdb-e3fd7b881eca"))
+                headers = mapOf(Pair("X-MM-GATEWAY-KEY", Constants.GATEWAY_KEY))
             )
         )
 
@@ -29,9 +30,9 @@ class SearchRepository : Repository() {
         val response = makeHttpRequest(
             HttpRequest(
                 HttpRequest.RequestType.GET,
-                "http://staging-gateway.mondiamedia.com/v2/api/sayt/flat?query=$query&limit=35",
+                "${Constants.BASE_URL}/v2/api/sayt/flat?query=$query&limit=35",
                 mapOf(
-                    Pair("X-MM-GATEWAY-KEY", "Ge6c853cf-5593-a196-efdb-e3fd7b881eca"),
+                    Pair("X-MM-GATEWAY-KEY", Constants.GATEWAY_KEY),
                     Pair("Authorization", "Bearer $token")
                 )
             )

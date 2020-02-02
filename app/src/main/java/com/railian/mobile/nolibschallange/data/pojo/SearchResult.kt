@@ -15,6 +15,7 @@ data class SearchResult(
     val type: String = "",
     val release: Release
 ) : Parcelable {
+
     companion object {
         @JvmStatic
         @Throws(JSONException::class)

@@ -1,7 +1,7 @@
 package com.railian.mobile.nolibschallange.util.mvp
 
-import com.railian.mobile.nolibschallange.data.pojo.network.HttpRequest
-import com.railian.mobile.nolibschallange.util.extensions.HttpResponse
+import com.railian.mobile.nolibschallange.data.network.HttpRequest
+import com.railian.mobile.nolibschallange.data.network.HttpResponse
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -14,10 +14,8 @@ abstract class Repository {
                 ).apply {
 
             requestMethod = request.type.name
-
             setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
             setRequestProperty("Accept", "application/json")
-
             doInput = true
             if (request.type != HttpRequest.RequestType.GET) {
                 doOutput = true

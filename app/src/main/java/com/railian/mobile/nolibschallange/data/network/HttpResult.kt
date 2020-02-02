@@ -1,4 +1,4 @@
-package com.railian.mobile.nolibschallange.util.extensions
+package com.railian.mobile.nolibschallange.data.network
 
 sealed class HttpResult<out T : Any> {
     data class Success<out T : Any>(val data: T) : HttpResult<T>()

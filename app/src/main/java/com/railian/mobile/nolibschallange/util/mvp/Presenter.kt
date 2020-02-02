@@ -3,7 +3,7 @@ package com.railian.mobile.nolibschallange.util.mvp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import com.railian.mobile.nolibschallange.util.extensions.HttpTask
+import com.railian.mobile.nolibschallange.data.network.HttpTask
 
 abstract class Presenter<T : MVPView> : LifecycleObserver {
     abstract var view: T?

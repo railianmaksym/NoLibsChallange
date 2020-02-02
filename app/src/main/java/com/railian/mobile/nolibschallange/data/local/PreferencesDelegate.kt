@@ -1,4 +1,4 @@
-package com.railian.mobile.nolibschallange.data.pojo.local
+package com.railian.mobile.nolibschallange.data.local
 
 import android.content.SharedPreferences
 import kotlin.properties.ReadWriteProperty

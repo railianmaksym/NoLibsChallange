@@ -1,4 +1,4 @@
-package com.railian.mobile.nolibschallange.util.extensions
+package com.railian.mobile.nolibschallange.data.network
 
 import android.os.AsyncTask
 

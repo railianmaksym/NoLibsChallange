@@ -1,12 +1,13 @@
 package com.railian.mobile.nolibschallange.ui.search
 
 import android.content.SharedPreferences
+import com.railian.mobile.nolibschallange.R
+import com.railian.mobile.nolibschallange.data.local.TokenStore
+import com.railian.mobile.nolibschallange.data.network.HttpResult
+import com.railian.mobile.nolibschallange.data.network.HttpTask
 import com.railian.mobile.nolibschallange.data.pojo.SearchResult
 import com.railian.mobile.nolibschallange.data.pojo.TokenResponse
-import com.railian.mobile.nolibschallange.data.pojo.local.TokenStore
 import com.railian.mobile.nolibschallange.ui.search.adapters.SearchResultsAdapter
-import com.railian.mobile.nolibschallange.util.extensions.HttpResult
-import com.railian.mobile.nolibschallange.util.extensions.HttpTask
 import com.railian.mobile.nolibschallange.util.mvp.Presenter
 
 class SearchPresenter(preferences: SharedPreferences) : Presenter<SearchView>() {
@@ -27,7 +28,7 @@ class SearchPresenter(preferences: SharedPreferences) : Presenter<SearchView>() 
     }
 
 
-    fun searchItems(query: String) {
+    fun searchItems(query: String = currentQuery) {
         view?.showProgress()
         currentQuery = query
 
@@ -54,7 +55,11 @@ class SearchPresenter(preferences: SharedPreferences) : Presenter<SearchView>() 
 
     private fun onSuccessGetSearchResults(data: List<SearchResult>) {
         view?.hideProgress()
-        searchResultsAdapter.results = data
+
+        if (data.isEmpty())
+            view?.showEmptyList()
+        else
+            searchResultsAdapter.results = data
     }
 
     private fun getToken() {
@@ -81,7 +86,7 @@ class SearchPresenter(preferences: SharedPreferences) : Presenter<SearchView>() 
 
     private fun onErrorGetToken(exception: Exception) {
         view?.hideProgress()
-        println()
+        view?.showError(R.string.network_error)
     }
 
     fun openDetailScreen(result: SearchResult) {

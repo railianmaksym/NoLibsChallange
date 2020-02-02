@@ -3,8 +3,11 @@ package com.railian.mobile.nolibschallange.ui.search
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.railian.mobile.nolibschallange.R
 import com.railian.mobile.nolibschallange.data.pojo.SearchResult
 import com.railian.mobile.nolibschallange.ui.detail.DetailInfoFragment
@@ -13,6 +16,7 @@ import com.railian.mobile.nolibschallange.util.extensions.makeClearableEditText
 import com.railian.mobile.nolibschallange.util.extensions.show
 import kotlinx.android.synthetic.main.app_bar_search.*
 import kotlinx.android.synthetic.main.fragment_search.*
+
 
 class SearchFragment : Fragment(R.layout.fragment_search), SearchView {
 
@@ -37,11 +41,11 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchView {
             )
             setOnEditorActionListener { _, _, _ ->
                 if (searchText.text.trim().length < 2) {
-                    showError(R.string.app_name)
+                    showError(R.string.query_validation)
                     return@setOnEditorActionListener false
                 }
                 presenter.searchItems(searchText.text.trim().toString())
-                true
+                false
             }
         }
     }
@@ -53,8 +57,14 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchView {
             ?.commit()
     }
 
+    override fun showEmptyList() {
+        searchResultsRV.hide()
+        emptyListLayout.show()
+    }
+
     override fun showProgress() {
         searchResultsRV.hide()
+        emptyListLayout.hide()
         progress.show()
     }
 
@@ -64,5 +74,9 @@ class SearchFragment : Fragment(R.layout.fragment_search), SearchView {
     }
 
     override fun showError(id: Int) {
+        showEmptyList()
+        Snackbar.make(searchResultsRV, id, Snackbar.LENGTH_LONG)
+            .setAction(R.string.retry) { presenter.searchItems() }
+            .show()
     }
 }

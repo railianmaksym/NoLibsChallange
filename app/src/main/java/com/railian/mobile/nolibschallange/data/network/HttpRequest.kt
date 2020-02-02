@@ -1,4 +1,4 @@
-package com.railian.mobile.nolibschallange.data.pojo.network
+package com.railian.mobile.nolibschallange.data.network
 
 
 data class HttpRequest(

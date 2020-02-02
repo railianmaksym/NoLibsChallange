@@ -30,4 +30,28 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_search_list" />
 
+    <RelativeLayout
+        android:id="@+id/emptyListLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/emptyListImage"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_list" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emptyListImage"
+            android:fontFamily="sans-serif-medium"
+            android:text="List of results is empty"
+            android:textAlignment="center"
+            android:textColor="@color/primaryText"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
 </RelativeLayout>

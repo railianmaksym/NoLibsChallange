@@ -5,4 +5,6 @@ import com.railian.mobile.nolibschallange.util.mvp.MVPView
 
 interface SearchView : MVPView {
     fun openDetailScreen(result: SearchResult)
+
+    fun showEmptyList()
 }

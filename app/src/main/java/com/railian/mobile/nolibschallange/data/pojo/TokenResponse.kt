@@ -6,7 +6,7 @@ import java.lang.IllegalArgumentException
 
 data class TokenResponse(
     var accessToken: String = ""
-) : PoJoClass {
+) {
 
     companion object {
         @JvmStatic

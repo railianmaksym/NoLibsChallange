@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">NoLibsChallange</string>
     <string name="search_hint">Search</string>
+    <string name="retry">retry</string>
+    <string name="network_error">network error</string>
+    <string name="query_validation">Search query lenth must be more then 2 characters</string>
 </resources>
