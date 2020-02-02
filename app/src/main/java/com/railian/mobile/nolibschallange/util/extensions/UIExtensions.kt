@@ -9,12 +9,20 @@ import android.os.AsyncTask
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import com.railian.mobile.nolibschallange.R
 import java.net.HttpURLConnection
 import java.net.URL
 
+fun View.hide() {
+    this.visibility = View.GONE
+}
+
+fun View.show() {
+    this.visibility = View.VISIBLE
+}
 
 fun EditText.makeClearableEditText(
     onClear: (() -> Unit)? = null,

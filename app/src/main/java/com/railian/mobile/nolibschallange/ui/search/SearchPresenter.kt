@@ -11,12 +11,12 @@ import com.railian.mobile.nolibschallange.util.mvp.Presenter
 
 class SearchPresenter(preferences: SharedPreferences) : Presenter<SearchView>() {
 
+    override var view: SearchView? = null
     private val repository = SearchRepository()
     private val tokenStore = TokenStore(preferences)
 
+    val searchResultsAdapter = SearchResultsAdapter(this)
     var currentQuery: String = ""
-
-    val searchResultsAdapter = SearchResultsAdapter()
 
     companion object {
         private var instance: SearchPresenter? = null
@@ -26,7 +26,6 @@ class SearchPresenter(preferences: SharedPreferences) : Presenter<SearchView>() 
         }
     }
 
-    override var view: SearchView? = null
 
     fun searchItems(query: String) {
         view?.showProgress()
@@ -54,6 +53,7 @@ class SearchPresenter(preferences: SharedPreferences) : Presenter<SearchView>() 
     }
 
     private fun onSuccessGetSearchResults(data: List<SearchResult>) {
+        view?.hideProgress()
         searchResultsAdapter.results = data
     }
 
@@ -71,7 +71,6 @@ class SearchPresenter(preferences: SharedPreferences) : Presenter<SearchView>() 
             )
 
         searchTask.execute()
-
         tasks.add(searchTask)
     }
 
@@ -81,7 +80,12 @@ class SearchPresenter(preferences: SharedPreferences) : Presenter<SearchView>() 
     }
 
     private fun onErrorGetToken(exception: Exception) {
+        view?.hideProgress()
         println()
+    }
+
+    fun openDetailScreen(result: SearchResult) {
+        view?.openDetailScreen(result)
     }
 
 }
